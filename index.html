@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class of '28 Elect/Elect Intel</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Mermaid.js CDN -->
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.mjs";
+    window.mermaid = mermaid;
+    mermaid.initialize({ startOnLoad: false });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <!-- SVG bulb logo -->
+      <div class="logo">
+        <svg width="70" height="70" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="28" r="16" fill="#FFF200" stroke="#FFD700" stroke-width="3"/>
+          <rect x="27" y="44" width="10" height="11" rx="3" fill="#BBBBBB" stroke="#808080" stroke-width="2"/>
+          <rect x="29" y="55" width="6" height="3" rx="1.5" fill="#FFD700"/>
+          <ellipse cx="32" cy="19" rx="4" ry="2.5" fill="#FFF" fill-opacity="0.8"/>
+        </svg>
+      </div>
+      <h1>Class of '28 Elect/Elect Intel</h1>
+      <p class="subtitle">Your Free, Open AI Engineering Assistant</p>
+    </header>
+    <section class="ai-selector">
+      <label>Choose AI:</label>
+      <button id="openai-btn">OpenAI</button>
+      <button id="gemini-btn">Gemini</button>
+    </section>
+    <div id="chatbox"></div>
+    <input id="userInput" type="text" placeholder="Ask an engineering question or request a diagram..."/>
+    <button onclick="sendMessage()">Send</button>
+    <hr/>
+    <section>
+      <h2>Related YouTube Courses</h2>
+      <div id="youtubeCourses"></div>
+    </section>
+    <section>
+      <h2>Generated Diagram</h2>
+      <div id="diagramArea"></div>
+    </section>
+  </div>
+  <footer>
+    <span class="tiny-remark">Credits to Masus Tv</span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

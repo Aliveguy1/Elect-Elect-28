@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #111;
+  color: #fff;
+}
+.container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  color: #111;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+header {
+  text-align: center;
+}
+.logo {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.subtitle {
+  font-size: 1.1rem;
+  color: #444;
+}
+.ai-selector {
+  text-align: center;
+  margin: 1rem 0;
+}
+.ai-selector button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.ai-selector button.active, .ai-selector button:hover {
+  background: #00bfff;
+  color: #111;
+}
+#chatbox {
+  background: #222;
+  color: #fff;
+  min-height: 180px;
+  border-radius: 0.7rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+#userInput {
+  width: calc(100% - 120px);
+  padding: 0.7rem;
+  border-radius: 0.6rem;
+  border: 1px solid #888;
+  margin-right: 8px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+button {
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.6rem;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #00bfff;
+  color: #111;
+}
+#diagramArea {
+  margin-top: 1rem;
+  background: #f0f0f0;
+  color: #222;
+  padding: 1rem;
+  min-height: 90px;
+  border-radius: 0.7rem;
+  font-size: 1rem;
+}
+.youtube-video {
+  display: inline-block;
+  width: 200px;
+  vertical-align: top;
+  margin: 0.5rem;
+  text-align: center;
+}
+.youtube-video img {
+  width: 100%;
+  border-radius: 0.6rem;
+}
+.youtube-video span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #222;
+}
+footer {
+  width: 100vw;
+  padding: 0.4rem 0;
+  background: transparent;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+}
+.tiny-remark {
+  font-size: 0.82em;
+  color: #aaa;
+  letter-spacing: 0.04em;
+  background: rgba(255,255,255,0.13);
+  border-radius: 0.3em;
+  padding: 0.1em 0.6em;
+}
