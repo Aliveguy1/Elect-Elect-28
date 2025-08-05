@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNIOSUN Screening Point Calculator</title>
+  <style>
+    /* Design System Variables */
+    :root {
+      /* Primitive Color Tokens */
+      --color-white: rgba(255, 255, 255, 1);
+      --color-black: rgba(0, 0, 0, 1);
+      --color-cream-50: rgba(252, 252, 249, 1);
+      --color-cream-100: rgba(255, 255, 253, 1);
+      --color-gray-200: rgba(245, 245, 245, 1);
+      --color-gray-300: rgba(167, 169, 169, 1);
+      --color-gray-400: rgba(119, 124, 124, 1);
+      --color-slate-500: rgba(98, 108, 113, 1);
+      --color-brown-600: rgba(94, 82, 64, 1);
+      --color-charcoal-700: rgba(31, 33, 33, 1);
+      --color-charcoal-800: rgba(38, 40, 40, 1);
+      --color-slate-900: rgba(19, 52, 59, 1);
+      --color-teal-300: rgba(50, 184, 198, 1);
+      --color-teal-400: rgba(45, 166, 178, 1);
+      --color-teal-500: rgba(33, 128, 141, 1);
+      --color-teal-600: rgba(29, 116, 128, 1);
+      --color-teal-700: rgba(26, 104, 115, 1);
+      --color-teal-800: rgba(41, 150, 161, 1);
+      --color-red-400: rgba(255, 84, 89, 1);
+      --color-red-500: rgba(192, 21, 47, 1);
+      --color-orange-400: rgba(230, 129, 97, 1);
+      --color-orange-500: rgba(168, 75, 47, 1);
+
+      /* RGB versions for opacity control */
+      --color-brown-600-rgb: 94, 82, 64;
+      --color-teal-500-rgb: 33, 128, 141;
+      --color-slate-900-rgb: 19, 52, 59;
+      --color-slate-500-rgb: 98, 108, 113;
+      --color-red-500-rgb: 192, 21, 47;
+      --color-red-400-rgb: 255, 84, 89;
+      --color-orange-500-rgb: 168, 75, 47;
+      --color-orange-400-rgb: 230, 129, 97;
+
+      /* Background color tokens (Light Mode) */
+      --color-bg-1: rgba(59, 130, 246, 0.08);
+      --color-bg-2: rgba(245, 158, 11, 0.08);
+      --color-bg-3: rgba(34, 197, 94, 0.08);
+      --color-bg-4: rgba(239, 68, 68, 0.08);
+      --color-bg-5: rgba(147, 51, 234, 0.08);
+      --color-bg-6: rgba(249, 115, 22, 0.08);
+      --color-bg-7: rgba(236, 72, 153, 0.08);
+      --color-bg-8: rgba(6, 182, 212, 0.08);
+
+      /* Semantic Color Tokens (Light Mode) */
+      --color-background: var(--color-cream-50);
+      --color-surface: var(--color-cream-100);
+      --color-text: var(--color-slate-900);
+      --color-text-secondary: var(--color-slate-500);
+      --color-primary: var(--color-teal-500);
+      --color-primary-hover: var(--color-teal-600);
+      --color-primary-active: var(--color-teal-700);
+      --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+      --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+      --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+      --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+      --color-btn-primary-text: var(--color-cream-50);
+      --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+      --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+      --color-error: var(--color-red-500);
+      --color-success: var(--color-teal-500);
+      --color-warning: var(--color-orange-500);
+      --color-info: var(--color-slate-500);
+      --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+      /* Common style patterns */
+      --focus-ring: 0 0 0 3px var(--color-focus-ring);
+      --focus-outline: 2px solid var(--color-primary);
+      --status-bg-opacity: 0.15;
+      --status-border-opacity: 0.25;
+
+      /* RGB versions for opacity control */
+      --color-success-rgb: 33, 128, 141;
+      --color-error-rgb: 192, 21, 47;
+      --color-warning-rgb: 168, 75, 47;
+      --color-info-rgb: 98, 108, 113;
+
+      /* Typography */
+      --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-size-xs: 11px;
+      --font-size-sm: 12px;
+      --font-size-base: 14px;
+      --font-size-md: 14px;
+      --font-size-lg: 16px;
+      --font-size-xl: 18px;
+      --font-size-2xl: 20px;
+      --font-size-3xl: 24px;
+      --font-size-4xl: 30px;
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 550;
+      --font-weight-bold: 600;
+      --line-height-tight: 1.2;
+      --line-height-normal: 1.5;
+      --letter-spacing-tight: -0.01em;
+
+      /* Spacing */
+      --space-0: 0;
+      --space-1: 1px;
+      --space-2: 2px;
+      --space-4: 4px;
+      --space-6: 6px;
+      --space-8: 8px;
+      --space-10: 10px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-24: 24px;
+      --space-32: 32px;
+
+      /* Border Radius */
+      --radius-sm: 6px;
+      --radius-base: 8px;
+      --radius-md: 10px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+      /* Animation */
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Dark mode colors */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-gray-400-rgb: 119, 124, 124;
+        --color-teal-300-rgb: 50, 184, 198;
+        --color-gray-300-rgb: 167, 169, 169;
+        --color-gray-200-rgb: 245, 245, 245;
+
+        --color-bg-1: rgba(29, 78, 216, 0.15);
+        --color-bg-2: rgba(180, 83, 9, 0.15);
+        --color-bg-3: rgba(21, 128, 61, 0.15);
+        --color-bg-4: rgba(185, 28, 28, 0.15);
+        --color-bg-5: rgba(107, 33, 168, 0.15);
+        --color-bg-6: rgba(194, 65, 12, 0.15);
+        --color-bg-7: rgba(190, 24, 93, 0.15);
+        --color-bg-8: rgba(8, 145, 178, 0.15);
+        
+        --color-background: var(--color-charcoal-700);
+        --color-surface: var(--color-charcoal-800);
+        --color-text: var(--color-gray-200);
+        --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+        --color-primary: var(--color-teal-300);
+        --color-primary-hover: var(--color-teal-400);
+        --color-primary-active: var(--color-teal-800);
+        --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+        --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+        --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+        --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+        --color-error: var(--color-red-400);
+        --color-success: var(--color-teal-300);
+        --color-warning: var(--color-orange-400);
+        --color-info: var(--color-gray-300);
+        --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+        --color-btn-primary-text: var(--color-slate-900);
+        --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+        --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+
+        --color-success-rgb: var(--color-teal-300-rgb);
+        --color-error-rgb: var(--color-red-400-rgb);
+        --color-warning-rgb: var(--color-orange-400-rgb);
+        --color-info-rgb: var(--color-gray-300-rgb);
+      }
+    }
+
+    /* Base styles */
+    html {
+      font-size: var(--font-size-base);
+      font-family: var(--font-family-base);
+      line-height: var(--line-height-normal);
+      color: var(--color-text);
+      background-color: var(--color-background);
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-background);
+      padding: var(--space-20);
+      min-height: 100vh;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-tight);
+      color: var(--color-text);
+      letter-spacing: var(--letter-spacing-tight);
+    }
+
+    h1 { font-size: var(--font-size-4xl); }
+    h2 { font-size: var(--font-size-3xl); }
+    h3 { font-size: var(--font-size-2xl); }
+    h4 { font-size: var(--font-size-xl); }
+    h5 { font-size: var(--font-size-lg); }
+    h6 { font-size: var(--font-size-md); }
+
+    p {
+      margin: 0 0 var(--space-16) 0;
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    a:hover {
+      color: var(--color-primary-hover);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-16);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-standard);
+      border: none;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .btn--primary {
+      background: var(--color-primary);
+      color: var(--color-btn-primary-text);
+    }
+
+    .btn--primary:hover {
+      background: var(--color-primary-hover);
+    }
+
+    .btn--primary:active {
+      background: var(--color-primary-active);
+    }
+
+    .btn--secondary {
+      background: var(--color-secondary);
+      color: var(--color-text);
+    }
+
+    .btn--secondary:hover {
+      background: var(--color-secondary-hover);
+    }
+
+    .btn--secondary:active {
+      background: var(--color-secondary-active);
+    }
+
+    .btn--outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn--outline:hover {
+      background: var(--color-secondary);
+    }
+
+    .btn--full-width {
+      width: 100%;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Form elements */
+    .form-control {
+      display: block;
+      width: 100%;
+      padding: var(--space-8) var(--space-12);
+      font-size: var(--font-size-md);
+      line-height: 1.5;
+      color: var(--color-text);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-base);
+      transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    select.form-control {
+      padding: var(--space-8) var(--space-12);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right var(--space-12) center;
+      background-size: 16px;
+      padding-right: var(--space-32);
+    }
+
+    .form-control:focus {
+      border-color: var(--color-primary);
+      outline: var(--focus-outline);
+      box-shadow: var(--focus-ring);
+    }
+
+    .form-control::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    .form-control.error {
+      border-color: var(--color-error) !important;
+      box-shadow: 0 0 0 3px rgba(var(--color-error-rgb), 0.1) !important;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: var(--space-8);
+      font-weight: var(--font-weight-medium);
+      font-size: var(--font-size-sm);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-16);
+    }
+
+    /* Custom application styles */
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .calculator-container {
+      background-color: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      background: var(--color-bg-1);
+      padding: var(--space-32) var(--space-24);
+      text-align: center;
+      border-bottom: 1px solid var(--color-card-border);
+    }
+
+    .header h1 {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .subtitle {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      margin: 0;
+    }
+
+    .main-content {
+      padding: var(--space-32) var(--space-24);
+    }
+
+    .calculator-form {
+      margin-bottom: var(--space-24);
+    }
+
+    .grades-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: var(--space-12);
+    }
+
+    .calculate-btn {
+      margin-top: var(--space-16);
+      padding: var(--space-12) var(--space-24);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .result-display {
+      background: var(--color-bg-3);
+      border: 1px solid rgba(var(--color-success-rgb), 0.2);
+      border-radius: var(--radius-md);
+      padding: var(--space-20);
+      text-align: center;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-success);
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--space-20);
+      transition: all var(--duration-normal) var(--ease-standard);
+    }
+
+    .result-display:empty {
+      display: none;
+    }
+
+    .result-display.error {
+      background: var(--color-bg-4);
+      border-color: rgba(var(--color-error-rgb), 0.2);
+      color: var(--color-error);
+    }
+
+    .result-display .score-highlight {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+    }
+
+    .contact-section {
+      background: var(--color-bg-2);
+      padding: var(--space-24);
+      border-top: 1px solid var(--color-card-border);
+    }
+
+    .contact-section h3 {
+      text-align: center;
+      margin-bottom: var(--space-20);
+      color: var(--color-text);
+      font-size: var(--font-size-xl);
+    }
+
+    .contact-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-24);
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      padding: var(--space-12) var(--space-16);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      text-decoration: none;
+      transition: all var(--duration-normal) var(--ease-standard);
+    }
+
+    .whatsapp-btn {
+      background: #25d366 !important;
+      border: 1px solid #25d366 !important;
+      color: white !important;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20ba5a !important;
+      border-color: #20ba5a !important;
+      color: white !important;
+    }
+
+    .phone-btn {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    .phone-btn:hover {
+      background: var(--color-secondary);
+    }
+
+    .group-invite {
+      text-align: center;
+    }
+
+    .group-invite p {
+      margin-bottom: var(--space-12);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    .footer {
+      background: var(--color-bg-8);
+      padding: var(--space-20);
+      text-align: center;
+      border-top: 1px solid var(--color-card-border);
+    }
+
+    .footer p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    /* Floating WhatsApp Button */
+    .floating-whatsapp {
+      position: fixed !important;
+      bottom: var(--space-24) !important;
+      right: var(--space-24) !important;
+      background: #25d366 !important;
+      color: white !important;
+      padding: var(--space-16) !important;
+      border-radius: var(--radius-full) !important;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3) !important;
+      text-decoration: none !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: var(--space-8) !important;
+      font-weight: var(--font-weight-medium) !important;
+      font-size: var(--font-size-sm) !important;
+      transition: all var(--duration-normal) var(--ease-standard) !important;
+      z-index: 1000 !important;
+      animation: float 3s ease-in-out infinite !important;
+    }
+
+    .floating-whatsapp:hover {
+      background: #20ba5a !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4) !important;
+      color: white !important;
+    }
+
+    .floating-text {
+      white-space: nowrap;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Button hover animations */
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left var(--duration-normal) var(--ease-standard);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Loading state for calculate button */
+    .calculate-btn.loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .calculate-btn.loading::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: var(--space-8);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Success animation for result */
+    .result-display.show {
+      animation: slideInUp 0.5s var(--ease-standard);
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Focus indicators for accessibility */
+    .btn:focus-visible,
+    .contact-btn:focus-visible,
+    .floating-whatsapp:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      body {
+        padding: var(--space-16);
+      }
+      
+      .header {
+        padding: var(--space-24) var(--space-20);
+      }
+      
+      .header h1 {
+        font-size: var(--font-size-2xl);
+      }
+      
+      .main-content {
+        padding: var(--space-24) var(--space-20);
+      }
+      
+      .contact-section {
+        padding: var(--space-20) var(--space-20);
+      }
+      
+      .contact-buttons {
+        gap: var(--space-10);
+      }
+      
+      .grades-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-10);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: var(--space-12);
+      }
+      
+      .header {
+        padding: var(--space-24) var(--space-16);
+      }
+      
+      .header h1 {
+        font-size: var(--font-size-2xl);
+      }
+      
+      .main-content {
+        padding: var(--space-24) var(--space-16);
+      }
+      
+      .contact-section {
+        padding: var(--space-20) var(--space-16);
+      }
+      
+      .contact-buttons {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+      
+      .grades-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-8);
+      }
+      
+      .floating-whatsapp {
+        bottom: var(--space-16) !important;
+        right: var(--space-16) !important;
+        padding: var(--space-12) !important;
+      }
+      
+      .floating-text {
+        display: none;
+      }
+      
+      .result-display {
+        font-size: var(--font-size-lg);
+        padding: var(--space-16);
+      }
+      
+      .result-display .score-highlight {
+        font-size: var(--font-size-xl);
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .grades-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-btn {
+        font-size: var(--font-size-xs);
+        padding: var(--space-10) var(--space-12);
+      }
+
+      .header h1 {
+        font-size: var(--font-size-xl);
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .calculate-btn {
+        padding: var(--space-16) var(--space-20);
+        font-size: var(--font-size-base);
+      }
+    }
+
+    /* Ultra small screens */
+    @media (max-width: 360px) {
+      body {
+        padding: var(--space-8);
+      }
+
+      .header {
+        padding: var(--space-20) var(--space-12);
+      }
+
+      .main-content {
+        padding: var(--space-20) var(--space-12);
+      }
+
+      .contact-section {
+        padding: var(--space-16) var(--space-12);
+      }
+
+      .grades-grid {
+        gap: var(--space-6);
+      }
+
+      .contact-buttons {
+        gap: var(--space-6);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="calculator-container">
+      <header class="header">
+        <h1>UNIOSUN Screening Point Calculator</h1>
+        <p class="subtitle">Calculate your university screening score easily</p>
+      </header>
+
+      <main class="main-content">
+        <form id="screeningForm" class="calculator-form">
+          <div class="form-group">
+            <label for="jamb" class="form-label">JAMB Score (0-400)</label>
+            <input 
+              type="number" 
+              id="jamb" 
+              name="jamb" 
+              class="form-control" 
+              min="0" 
+              max="400" 
+              placeholder="Enter your JAMB score"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">O'Level Grades (5 relevant subjects)</label>
+            <div class="grades-grid">
+              <select class="form-control grade" id="grade1" name="grade1" required>
+                <option value="">Select Grade</option>
+                <option value="A1">A1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="C4">C4</option>
+                <option value="C5">C5</option>
+                <option value="C6">C6</option>
+                <option value="D7">D7</option>
+                <option value="E8">E8</option>
+                <option value="F9">F9</option>
+              </select>
+              <select class="form-control grade" id="grade2" name="grade2" required>
+                <option value="">Select Grade</option>
+                <option value="A1">A1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="C4">C4</option>
+                <option value="C5">C5</option>
+                <option value="C6">C6</option>
+                <option value="D7">D7</option>
+                <option value="E8">E8</option>
+                <option value="F9">F9</option>
+              </select>
+              <select class="form-control grade" id="grade3" name="grade3" required>
+                <option value="">Select Grade</option>
+                <option value="A1">A1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="C4">C4</option>
+                <option value="C5">C5</option>
+                <option value="C6">C6</option>
+                <option value="D7">D7</option>
+                <option value="E8">E8</option>
+                <option value="F9">F9</option>
+              </select>
+              <select class="form-control grade" id="grade4" name="grade4" required>
+                <option value="">Select Grade</option>
+                <option value="A1">A1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="C4">C4</option>
+                <option value="C5">C5</option>
+                <option value="C6">C6</option>
+                <option value="D7">D7</option>
+                <option value="E8">E8</option>
+                <option value="F9">F9</option>
+              </select>
+              <select class="form-control grade" id="grade5" name="grade5" required>
+                <option value="">Select Grade</option>
+                <option value="A1">A1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="C4">C4</option>
+                <option value="C5">C5</option>
+                <option value="C6">C6</option>
+                <option value="D7">D7</option>
+                <option value="E8">E8</option>
+                <option value="F9">F9</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full-width calculate-btn">
+            Calculate Score
+          </button>
+        </form>
+
+        <div id="result" class="result-display"></div>
+      </main>
+
+      <section class="contact-section">
+        <h3>Need Help?</h3>
+        <div class="contact-buttons">
+          <a href="tel:+2348159619914" class="btn phone-btn contact-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Call: +2348159619914
+          </a>
+          
+          <a href="https://wa.me/2348159619914" target="_blank" class="btn whatsapp-btn contact-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.425 3.756"/>
+            </svg>
+            WhatsApp Chat
+          </a>
+        </div>
+        
+        <div class="group-invite">
+          <p>Join our community for updates and support:</p>
+          <a href="https://chat.whatsapp.com/BHVgV7y64miDcK435AblVf" target="_blank" class="btn btn--secondary btn--full-width">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.425 3.756"/>
+            </svg>
+            Join UNIOSUN Aspirant Group
+          </a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>Made with 💙 by Masus Tv ✨</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://chat.whatsapp.com/BHVgV7y64miDcK435AblVf" target="_blank" class="floating-whatsapp" title="Join UNIOSUN Aspirant Group">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.425 3.756"/>
+    </svg>
+    <span class="floating-text">Join Group</span>
+  </a>
+
+  <script>
+    // Grade points mapping
+    const gradePoints = {
+      "A1": 8, "B2": 7, "B3": 6, "C4": 5,
+      "C5": 4, "C6": 3, "D7": 2, "E8": 1, "F9": 0
+    };
+
+    // Calculator functionality
+    function calculateScore() {
+      console.log('Calculate score function called');
+      
+      // Get JAMB score
+      const jambScore = parseFloat(document.getElementById('jamb').value);
+      if (isNaN(jambScore) || jambScore < 0 || jambScore > 400) {
+        showError('Please enter a valid JAMB score between 0 and 400');
+        return;
+      }
+
+      // Get all grade values
+      const grades = [];
+      for (let i = 1; i <= 5; i++) {
+        const gradeSelect = document.getElementById(`grade${i}`);
+        const gradeValue = gradeSelect.value;
+        if (!gradeValue) {
+          showError(`Please select grade for subject ${i}`);
+          return;
+        }
+        grades.push(gradeValue);
+      }
+
+      console.log('JAMB Score:', jambScore);
+      console.log('Grades:', grades);
+
+      // Calculate JAMB percentage (60% of total)
+      const jambPercentage = (jambScore * 60) / 400;
+
+      // Calculate O'Level points
+      const olevelPoints = grades.reduce((total, grade) => {
+        return total + (gradePoints[grade] || 0);
+      }, 0);
+
+      // Total screening score
+      const totalScore = jambPercentage + olevelPoints;
+
+      console.log('JAMB Percentage:', jambPercentage);
+      console.log('O\'Level Points:', olevelPoints);
+      console.log('Total Score:', totalScore);
+
+      // Display result
+      showResult(totalScore, jambScore, jambPercentage, olevelPoints);
+    }
+
+    function showResult(totalScore, jambScore, jambPercentage, olevelPoints) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <div>
+          Your UNIOSUN Screening Score: 
+          <span class="score-highlight">${totalScore.toFixed(2)}%</span>
+        </div>
+        <div style="font-size: var(--font-size-sm); margin-top: var(--space-8); color: var(--color-text-secondary);">
+          JAMB: ${jambScore}/400 (${jambPercentage.toFixed(1)}%) + O'Level: ${olevelPoints} points
+        </div>
+      `;
+      resultDiv.className = 'result-display show';
+    }
+
+    function showError(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = message;
+      resultDiv.className = 'result-display error show';
+      
+      // Clear error after 5 seconds
+      setTimeout(() => {
+        resultDiv.innerHTML = '';
+        resultDiv.className = 'result-display';
+      }, 5000);
+    }
+
+    function showLoading() {
+      const btn = document.querySelector('.calculate-btn');
+      btn.classList.add('loading');
+      btn.textContent = 'Calculating...';
+    }
+
+    function hideLoading() {
+      const btn = document.querySelector('.calculate-btn');
+      btn.classList.remove('loading');
+      btn.textContent = 'Calculate Score';
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Page loaded, initializing calculator...');
+      
+      // Handle form submission
+      const form = document.getElementById('screeningForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('Form submitted');
+        
+        showLoading();
+        
+        // Add small delay for better UX
+        setTimeout(() => {
+          calculateScore();
+          hideLoading();
+        }, 500);
+      });
+
+      // Handle input changes for validation
+      const jambInput = document.getElementById('jamb');
+      jambInput.addEventListener('input', function() {
+        // Ensure only numbers
+        this.value = this.value.replace(/[^0-9]/g, '');
+        
+        // Limit to 3 digits
+        if (this.value.length > 3) {
+          this.value = this.value.slice(0, 3);
+        }
+      });
+
+      // Log that all elements are found
+      console.log('JAMB input:', document.getElementById('jamb'));
+      console.log('Grade selects:', document.querySelectorAll('.grade'));
+      console.log('Form:', document.getElementById('screeningForm'));
+      console.log('Calculate button:', document.querySelector('.calculate-btn'));
+      
+      console.log('Calculator initialized successfully');
+    });
+  </script>
+</body>
+</html>
